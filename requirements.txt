@@ -1,0 +1,18 @@
+# DevOps Python Scripts Requirements
+# These dependencies are required for the scripts to work properly
+
+# YAML parsing
+PyYAML>=6.0
+
+# Optional: For additional functionality
+# boto3>=1.28.0  # AWS SDK (for provision_infrastructure.py)
+# google-cloud-storage>=2.0.0  # GCP SDK (for provision_infrastructure.py)
+# azure-storage-blob>=12.0.0  # Azure SDK (for provision_infrastructure.py)
+
+# Optional: For advanced features
+# psycopg2-binary>=2.9.0  # PostgreSQL driver
+# mysql-connector-python>=8.0.0  # MySQL driver
+# pymongo>=4.0.0  # MongoDB driver
+# docker>=6.0.0  # Docker SDK
+# kubernetes>=26.0.0  # Kubernetes Python client
+# requests>=2.28.0  # HTTP requests
