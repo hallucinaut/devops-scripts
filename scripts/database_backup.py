@@ -13,7 +13,7 @@ import tarfile
 import tempfile
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 import logging
 
 
@@ -22,9 +22,9 @@ class DatabaseBackupManager:
     
     def __init__(self, config_file: Optional[str] = None):
         self.config = self._load_config(config_file)
-        self.logger = self._setup_logger()
         self.backup_dir = Path(self.config.get('backup_dir', 'backups'))
         self.backup_dir.mkdir(exist_ok=True)
+        self.logger = self._setup_logger()
     
     def _load_config(self, config_file: str) -> Dict:
         """Load configuration from file"""

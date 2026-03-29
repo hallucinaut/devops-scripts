@@ -19,7 +19,8 @@ class KubernetesDeployer:
     
     def __init__(self, namespace: str = 'default'):
         self.namespace = namespace
-        self.context = self._get_current_context()
+        self.context = self._get_current_context() if namespace != "default" else "default"
+
     
     def _get_current_context(self) -> str:
         """Get current k8s context"""
@@ -29,7 +30,8 @@ class KubernetesDeployer:
                 capture_output=True, text=True, check=True
             )
             return result.stdout.strip()
-        except subprocess.CalledProcessError:
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            print("⚠ kubectl not available, using default context")
             return 'default'
     
     def create_namespace(self, namespace: str):

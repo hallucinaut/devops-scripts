@@ -123,7 +123,7 @@ python scripts/config_manager.py \
     env \
     set \
     --key API_KEY \
-    --value secret123 \
+    --value your_value_here \
     --file .env
 ```
 
@@ -456,7 +456,7 @@ python scripts/config_manager.py \
     env \
     set \
     --key API_KEY \
-    --value secret123 \
+    --value your_value_here \
     --file .env
 
 # Get environment variable

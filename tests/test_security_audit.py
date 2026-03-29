@@ -32,7 +32,7 @@ def test_security_issues_detection():
     assert any('sql_injection' in issue['type'] for issue in issues)
     
     # Test hardcoded secret detection
-    content = "api_key = 'secret123'"
+    content = "api_key = 'YOUR_API_KEY_HERE'"
     issues = auditor._find_security_issues(content)
     assert any('hardcoded_secret' in issue['type'] for issue in issues)
     
@@ -91,7 +91,7 @@ def test_directory_scanning():
     with tempfile.TemporaryDirectory() as tmpdir:
         # Create test file with security issues
         test_file = Path(tmpdir) / 'test.py'
-        test_file.write_text("api_key = 'secret123'")
+        test_file.write_text("api_key = 'YOUR_API_KEY_HERE'")
         
         # Scan directory
         auditor.scan_directory(tmpdir, {'.py'})

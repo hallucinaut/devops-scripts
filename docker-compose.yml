@@ -1,0 +1,102 @@
+version: '3.8'
+
+services:
+  # Main testing container
+  devops-scripts:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # Mount source code for development
+      - .:/app
+      # Mount logs directory
+      - logs:/app/logs
+      # Mount backups directory
+      - backups:/app/backups
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    working_dir: /app
+    command: >
+      bash -c "
+        echo '=== DevOps Scripts Testing Environment ===' &&
+        echo '' &&
+        echo 'Available scripts:' &&
+        ls -1 scripts/*.py | xargs -I {} basename {} .py &&
+        echo '' &&
+        echo 'Run tests with: python3 tests/test_all.py' &&
+        echo 'Run security audit: python3 scripts/security_audit.py --scan directory --directory .' &&
+        echo '' &&
+        echo 'Exit this container to continue...'"
+    networks:
+      - devops-network
+    restart: "no"
+
+  # PostgreSQL for database backup testing
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpassword
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - devops-network
+    restart: "no"
+
+  # MySQL for database backup testing
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - devops-network
+    restart: "no"
+
+  # MongoDB for database backup testing
+  mongodb:
+    image: mongo:6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: testuser
+      MONGO_INITDB_ROOT_PASSWORD: testpassword
+      MONGO_INITDB_DATABASE: testdb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - devops-network
+    restart: "no"
+
+  # Redis for additional testing
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - devops-network
+    restart: "no"
+
+networks:
+  devops-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  mysql_data:
+  mongodb_data:
+  redis_data:
+  logs:
+  backups:

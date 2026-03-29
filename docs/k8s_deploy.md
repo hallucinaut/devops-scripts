@@ -108,7 +108,7 @@ python scripts/k8s_deploy.py \
     --name db-secret \
     --data \
     username=admin \
-    password=secret123
+    password=your_password_here
 ```
 
 ### Apply from File

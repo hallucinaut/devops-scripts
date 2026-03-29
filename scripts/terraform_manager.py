@@ -30,7 +30,7 @@ class TerraformManager:
             subprocess.run(['terraform', '--version'], capture_output=True, check=True)
         except (subprocess.CalledProcessError, FileNotFoundError):
             print("Terraform is not installed or not accessible", file=sys.stderr)
-            sys.exit(1)
+            raise RuntimeError("Terraform is not installed or not accessible")
     
     def init(self, backend_config: Optional[Dict] = None):
         """Initialize Terraform configuration"""
@@ -335,10 +335,12 @@ def main():
             print("✓ Configuration is properly formatted")
         else:
             print("✗ Configuration needs formatting")
-            sys.exit(1)
+            print("Terraform is not installed or not accessible", file=sys.stderr)
+            raise RuntimeError("Terraform is not installed or not accessible")
     else:
         parser.print_help()
-        sys.exit(1)
+        print("Terraform is not installed or not accessible", file=sys.stderr)
+        raise RuntimeError("Terraform is not installed or not accessible")
 
 
 if __name__ == '__main__':

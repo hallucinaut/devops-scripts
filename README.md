@@ -118,7 +118,7 @@ Configuration file management.
 
 **Usage:**
 ```bash
-python scripts/config_manager.py env set --key API_KEY --value secret123
+python scripts/config_manager.py env set --key API_KEY --value your_api_key_here
 ```
 
 ## Testing

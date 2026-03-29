@@ -384,7 +384,7 @@ python scripts/security_audit.py \
 
 ```python
 # BAD
-api_key = 'secret123'
+api_key = 'your_api_key_here'
 
 # GOOD
 api_key = os.getenv('API_KEY')
